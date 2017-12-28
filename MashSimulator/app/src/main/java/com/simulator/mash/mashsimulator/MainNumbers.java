@@ -37,8 +37,12 @@ public class MainNumbers{
     }
 
     /* Setters */
-    public void setMainBalance(int mainBalance){
-        this.mainBalance = this.mainBalance + mainBalance;
+    public void setMainBalanceIncrease(int value){
+        this.mainBalance = this.mainBalance + value;
+    }
+
+    public void setMainBalanceDecrease(int value){
+        this.mainBalance = this.mainBalance - value;
     }
 
     public void setMainExperience(int mainExperience){

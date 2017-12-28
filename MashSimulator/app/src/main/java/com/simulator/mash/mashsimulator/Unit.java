@@ -9,9 +9,17 @@ public class Unit {
     private int autoRaiseBalance;
     private int price;
     private int amount;
+    private int minExperience;
 
     /* Constructor */
-    public Unit(int id, String name, int raiseExperience, int buttonRaiseBalance, int autoRaiseBalance, int price, int amount){
+    public Unit(int id,
+                String name,
+                int raiseExperience,
+                int buttonRaiseBalance,
+                int autoRaiseBalance,
+                int price,
+                int amount,
+                int minExperience){
         this.id = id;
         this.name = name;
         this.raiseExperience = raiseExperience;
@@ -19,6 +27,7 @@ public class Unit {
         this.autoRaiseBalance = autoRaiseBalance;
         this.price = price;
         this.amount = amount;
+        this.minExperience = minExperience;
     }
 
     /* Getters */
@@ -47,21 +56,11 @@ public class Unit {
         return this.amount;
     }
 
+    public int getMinExperience() { return this.minExperience; }
+
     /* Setters */
     public void setName(String name){
         this.name = name;
-    }
-
-    public void setRaiseExperience(int raiseExperience){
-        this.raiseExperience = raiseExperience;
-    }
-
-    public void setButtonRaiseBalance(int buttonRaiseBalance){
-        this.buttonRaiseBalance = buttonRaiseBalance;
-    }
-
-    public void setAutoRaiseBalance(int autoRaiseBalance){
-        this.autoRaiseBalance = autoRaiseBalance;
     }
 
     public void setPrice(int price){
