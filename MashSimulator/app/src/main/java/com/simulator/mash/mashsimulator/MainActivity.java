@@ -1,5 +1,6 @@
 package com.simulator.mash.mashsimulator;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Timer;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     // Create a vector of units
     Vector<Unit> vectorOfUnits = new Vector<Unit>();
 
+    // Create database
+    DbAdapter db = new DbAdapter(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
         textAutoRaiseBalance.setTextColor(Color.GREEN);
 
         // Populate vector with fruits
-        populateVectorOfUnits();
+        //populateVectorOfUnits();
+        populateDatabase();
+        retrieveAllUnits();
 
         // UI updated every seconds by Thread
         Thread t = new Thread() {
@@ -148,9 +153,44 @@ public class MainActivity extends AppCompatActivity {
                 llForUnit.setOrientation(LinearLayout.HORIZONTAL);
                 llForUnit.addView(button);
                 llForUnit.addView(llForTexts);
-                
+
                 gridLayout.addView(llForUnit);
             }
         }
+    }
+
+    private void populateDatabase() {
+        db.open();
+
+        long id = db.insertUnit("Apple", "1", "1", "1", "5", "0","0");
+        id = db.insertUnit("Peach", "2", "2", "1", "400", "0","10");
+        id = db.insertUnit("Grape", "3", "3", "1", "900", "0","100");
+        db.close();
+    }
+
+    private void retrieveAllUnits() {
+
+        db.open();
+        Cursor c = db.getAllUnits();
+        if (c.moveToFirst()){
+            do {
+                vectorOfUnits.add(convertDbRowToUnitObject(c));
+            } while (c.moveToNext());
+        }
+        db.close();
+    }
+
+    private Unit convertDbRowToUnitObject(Cursor cursor){
+        Unit result = new Unit(
+                0,
+                cursor.getString(0),
+                Integer.parseInt(cursor.getString(1)),
+                Integer.parseInt(cursor.getString(2)),
+                Integer.parseInt(cursor.getString(3)),
+                Integer.parseInt(cursor.getString(4)),
+                Integer.parseInt(cursor.getString(5)),
+                Integer.parseInt(cursor.getString(6))
+        );
+        return result;
     }
 }
